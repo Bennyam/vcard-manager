@@ -23,6 +23,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\VCardManager.Core\VCardManager.Core.csproj" />
+    <ProjectReference Include="..\VCardManager.CLI\VCardManager.CLI.csproj" />
   </ItemGroup>
 
 </Project>
