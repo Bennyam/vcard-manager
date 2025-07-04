@@ -10,11 +10,11 @@ namespace VCardManager.CLI
   public class Menu
   {
     private readonly IConsole console;
-    private readonly ContactService contactService;
+    private readonly IContactService contactService;
     private readonly ContactInputHelper inputHelper;
 
 
-    public Menu(IConsole console, ContactService contactService, ContactInputHelper inputHelper)
+    public Menu(IConsole console, IContactService contactService, ContactInputHelper inputHelper)
     {
       this.console = console;
       this.contactService = contactService;
