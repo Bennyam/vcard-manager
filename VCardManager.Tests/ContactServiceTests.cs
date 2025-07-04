@@ -12,7 +12,7 @@ public class ContactServiceTests
     return new ContactService(store, converter ?? new VCardConverter(), TestFile);
   }
 
-  private Contact SampleContact() => new Contact("Ben", "Ameryckx", "+32 453789006", "ben@testmail.com");
+  private Contact SampleContact() => new Contact("Ben", "Ameryckx", "453/78.90.06", "ben@testmail.com");
 
   [Fact]
   public void GetAll_Returns_Empty_IfNotExists()

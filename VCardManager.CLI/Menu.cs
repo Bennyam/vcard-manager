@@ -27,6 +27,7 @@ namespace VCardManager.CLI
       {
         ShowMenu();
         var choice = console.ReadLine();
+        if (choice == null) return;
 
         switch (choice)
         {
@@ -42,7 +43,7 @@ namespace VCardManager.CLI
         }
 
         console.WriteLine("\nDruk op Enter om verder te gaan...");
-        console.ReadLine();
+        if(console.ReadLine() == null) return;
         console.Clear();
       }
     }

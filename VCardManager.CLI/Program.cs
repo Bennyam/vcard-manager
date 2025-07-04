@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using System.Runtime.InteropServices;
+using Microsoft.Extensions.DependencyInjection;
 using VCardManager.Core;
 
 namespace VCardManager.CLI
@@ -15,15 +16,7 @@ namespace VCardManager.CLI
 
             services.AddSingleton<IFileStore, FileSystemStore>();
             services.AddSingleton<IVCardConverter, VCardConverter>();
-
-            string filePath = "data/contacts.vcf";
-
-            services.AddSingleton(provider =>
-            {
-                var fileStore = provider.GetRequiredService<IFileStore>();
-                var converter = provider.GetRequiredService<IVCardConverter>();
-                return new ContactService(fileStore, converter, filePath);
-            });
+            services.AddSingleton<IContactService, ContactService>();
 
             var serviceProvider = services.BuildServiceProvider();
 

@@ -12,15 +12,16 @@ public class MenuTests
     var spyConsole = new ConsoleSpy();
     var fileStore = new InMemoryFileStore();
     var converter = new VCardConverter();
-    var filePath = "data/contacts.vcf";
 
-    var service = new ContactService(fileStore, converter, filePath);
-    service.Add(new Contact("Ben", "Ameryckx", "+32 0468299300", "ben@testmail.com"));
+    var service = new ContactService(fileStore, converter, "testdata.vcf");
+    service.Add(new Contact("Ben", "Ameryckx", "0468/29.93.00", "ben@testmail.com"));
 
-    spyConsole.ProvideInput("1", "", "0");
-
-    var menu = new Menu(spyConsole, service);
+    spyConsole.ProvideInput("1", "", "0", "");
+    
+    var inputHelper = new ContactInputHelper(spyConsole);
+    var menu = new Menu(spyConsole, service, inputHelper);
     menu.Run();
+    
 
     var output = string.Join("\n", spyConsole.Output);
     Assert.Contains("Ben Ameryckx", output);
