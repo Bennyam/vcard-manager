@@ -11,12 +11,14 @@ namespace VCardManager.CLI
   {
     private readonly IConsole console;
     private readonly ContactService contactService;
+    private readonly ContactInputHelper inputHelper;
 
 
-    public Menu(IConsole console, ContactService contactService)
+    public Menu(IConsole console, ContactService contactService, ContactInputHelper inputHelper)
     {
       this.console = console;
       this.contactService = contactService;
+      this.inputHelper = inputHelper;
     }
 
     public void Run()
@@ -54,7 +56,7 @@ namespace VCardManager.CLI
       console.WriteLine("4. Verwijder contact");
       console.WriteLine("5. Exporteer contact naar bestand");
       console.WriteLine("0. Afsluiten");
-      console.WriteLine("Keuze: ");
+      console.Write("Keuze: ");
     }
 
     private void ShowAll()
@@ -69,24 +71,15 @@ namespace VCardManager.CLI
 
       foreach (var c in contacts)
       {
-        console.WriteLine($"- {c.FullName} ({c.Email}, {c.Phone})");
+        console.WriteLine($"{c.FullName}: {c.Email}, {c.Phone}");
       }
     }
 
     private void AddContact()
     {
-      console.Write("Voornaam: ");
-      var first = console.ReadLine();
-      console.Write("Achternaam: ");
-      var last = console.ReadLine();
-      console.Write("Telefoon: ");
-      var phone = console.ReadLine();
-      console.Write("Email: ");
-      var email = console.ReadLine();
-
-      var contact = new Contact(first, last, phone, email);
+      var contact = inputHelper.PromptForContact();
       contactService.Add(contact);
-      console.WriteLine("Contact toegevoegd");
+      console.WriteLine("Contact toegevoegd.");
     }
 
     private void Search()

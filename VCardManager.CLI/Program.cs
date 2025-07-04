@@ -10,6 +10,7 @@ namespace VCardManager.CLI
             var services = new ServiceCollection();
 
             services.AddTransient<IConsole, SystemConsole>();
+            services.AddTransient<ContactInputHelper>();
             services.AddTransient<Menu>();
 
             services.AddSingleton<IFileStore, FileSystemStore>();
