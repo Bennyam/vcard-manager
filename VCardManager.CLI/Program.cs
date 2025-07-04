@@ -1,20 +1,34 @@
-﻿using VCardManager.Core;
+﻿using Microsoft.Extensions.DependencyInjection;
+using VCardManager.Core;
 
 namespace VCardManager.CLI
 {
-  internal class Program
-  {
-    static void Main()
+    internal class Program
     {
-      IConsole console = new SystemConsole();
-      IFileStore fileStore = new FileSystemStore();
-      IVCardConverter converter = new VCardConverter();
-      string filePath = "data/contacts.vcf";
+        static void Main()
+        {
+            var services = new ServiceCollection();
 
-      var service = new ContactService(fileStore, converter, filePath);
-      var menu = new Menu(console, service);
+            services.AddTransient<IConsole, SystemConsole>();
+            services.AddTransient<Menu>();
 
-      menu.Run();
+            services.AddSingleton<IFileStore, FileSystemStore>();
+            services.AddSingleton<IVCardConverter, VCardConverter>();
+
+            string filePath = "data/contacts.vcf";
+
+            services.AddSingleton(provider =>
+            {
+                var fileStore = provider.GetRequiredService<IFileStore>();
+                var converter = provider.GetRequiredService<IVCardConverter>();
+                return new ContactService(fileStore, converter, filePath);
+            });
+
+            var serviceProvider = services.BuildServiceProvider();
+
+            var menu = serviceProvider.GetRequiredService<Menu>();
+            menu.Run();
+        }
     }
-  }
 }
+
